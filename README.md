@@ -154,34 +154,39 @@ if (something) {
 }
 ```
 
-* multi-line conditionals should begin on the next line as the conditional logic (for spacing), and end their lines with a logical statement
+* multi-line conditionals should begin on the next line as the conditional logic (for spacing), and end each logical expression with a logical statement.  
+  * Expressions being `&&`, `||`, or `,` (in the case of optional `let` chaining)
+  * The opening scope `{` should begin on the next line.  
+  * Parenthetical expressions `(a == b)` should be grouped on their own line when possible.
 
 **OK**
 ```swift
 if 
     mySomething ||
-    otherSomething &&
-    thisThing {
+    (otherSomething && thisThing)
+{
     
-}
+} 
 
 guard
     let x = myString.toInt(),
-    x > 0 else {
+    x > 0 
+else {
     
 }
 ```
 
 **NOT**
 ```swift
-if mySomething || otherSomething 
-&& thisThing {
+if mySomething || 
+  (otherSomething 
+   && thisThing) {
     
 }
 
-guard let x = myString.toInt(),
-    x > 0 
-else {
+guard 
+    let x = myString.toInt(),
+    x > 0 else {
     
 }
 ```
@@ -224,7 +229,7 @@ if let actualNumber = possibleNumber.toInt() {
 }
 
 if _ = possibleNumber.toInt() {
-
+   // only if the result isn't being used
 }
 ```
 
