@@ -1,10 +1,14 @@
-# Swift 2.0 Style Guide
+# Swift 3.0 Style Guide
 
 This document is intended as a style guide for Swift written from the perspective of a long-time Objective-C developer.  As such, there's a lot of "why" included.
 
 #### Thanks
 
-* to github user `Nartiles` for some examples from [their guide](https://github.com/nartiles/swift-style-guide)
+* to github user `Nartiles` for some examples from [their 2.0 guide](https://github.com/nartiles/swift-style-guide)
+* to Ray Wenderlich [for his guide](https://github.com/raywenderlich/swift-style-guide)
+* to NatashaTheRobot for 
+  * [KVO Alternatives](http://natashatherobot.com/ios-a-beautiful-way-of-styling-iboutlets-in-swift/)
+  * [Railroad Programming](http://natashatherobot.com/swift-guard-better-than-if)
 
 ***
 
@@ -61,13 +65,13 @@ Swift is a "Protocol-Oriented Programming Language" [WWDC2015 video on it](https
 * Not locked into a given implementation
 * Further de-couples code
 
-**DO**
+**Prefered**
 * **Write a protocol first**: Describe the type before implementing it
 * **Behavior Injection**: Define a function `typealias` for customizing a type's behavior
 * **Dependency Injection**: Subscribe _only_ to another protocol.
 * **Nest Types**: If a type requires data in a given format or an enum, include it in the protocol
 
-**DO-NOT**
+**Not Preffered**
 * **Subclass**: Instead, opt for multiple inheritance through Protocols and default implementations
 * **Adjectives in Type Names**: If you added an adjective to a type name, consider breaking that adjective out into it's own protocol
 * **Nest Types in a Function**: Don't.  Please...  Don't.
@@ -97,19 +101,32 @@ Unlike Objective-C, Swift allows us to keep the clarity of function naming while
  1. Don't use abbreviations (except for stuff like `URL` or `UUID`)
  1. Don't shorten for the sake of brevity.  Clarity is the goal.
 
+## Swift 3.0 API Naming Guidelines
+
+Apple has produced a [thorough guide on naming with Swift 3.](https://swift.org/documentation/api-design-guidelines/) . Where possible, adhere to this guideline.
+
 ### Spacing
 
 * Indent using 4 spaces. Never indent with tabs. Be sure to set this preference in Xcode.
 * Method braces and other braces (`if`/`else`/`switch`/`while` etc.) always open on the same line as the statement but close on a new line.
 * There should be exactly one blank line between methods to aid in visual clarity and organization. Whitespace within methods should separate functionality, but often there should probably be new methods.
-* Add Space Before Type Declarations:
+* Add a space between the `:` and the type, but not the label.  
+
 **OK**
-```
+```swift
 let foo: Bar
+let hash: [String: Int]
+class MyView: UIView
 ```
+
 **NOT**
-```
+```swift
 let foo:Bar
+let foo : Bar
+let hash: [String:Int]
+let hash: [String : Int]
+class MyView : UIView
+class MyView:UIView
 ```
 
 
@@ -134,6 +151,38 @@ if something || (other < 10) {
 ```swift
 if (something) {
 
+}
+```
+
+* multi-line conditionals should begin on the next line as the conditional logic (for spacing), and end their lines with a logical statement
+
+**OK**
+```swift
+if 
+    mySomething ||
+    otherSomething &&
+    thisThing {
+    
+}
+
+guard
+    let x = myString.toInt(),
+    x > 0 else {
+    
+}
+```
+
+**NOT**
+```swift
+if mySomething || otherSomething 
+&& thisThing {
+    
+}
+
+guard let x = myString.toInt(),
+    x > 0 
+else {
+    
 }
 ```
 
@@ -173,31 +222,36 @@ Use [Optional Binding](https://developer.apple.com/library/ios/documentation/Swi
 ```swift
 if let actualNumber = possibleNumber.toInt() {
 }
+
+if _ = possibleNumber.toInt() {
+
+}
 ```
 
 **NOT**
 ```swift
 if possibleNumber.toInt() != nil {
+  let actualNumber = possibleNumber.toInt()!
 }
 ```
 
 ### Labeled Statements
 
-Use [Labeled Statements](https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/ControlFlow.html#//apple_ref/doc/uid/TP40014097-CH9-ID135) when using any of the control transfer keywords like `break`, `continue`, or `fallthrough`.
+Use [Labeled Statements](https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/ControlFlow.html#//apple_ref/doc/uid/TP40014097-CH9-ID135) when using any of the control transfer keywords like `break`, `continue`, or `fallthrough`.  Statement Labels should be in `ALL_CAPS`
 
 Because loops and switches can be nested, it is preferred that the specific control structure being controlled be labeled as such.
 
 **OK**
 ```swift
-gameLoop: while square != finalSquare {
+GAME_LOOP: while square != finalSquare {
     if ++diceRoll == 7 { diceRoll = 1 }
-    rollSwitch: switch square + diceRoll {
+    ROLL_SWITCH: switch square + diceRoll {
     case finalSquare:
-        break gameLoop
+        break GAME_LOOP
     case let newSquare where newSquare > finalSquare:
-        continue gameLoop
+        continue GAME_LOOP
     default:
-        break rollSwitch
+        break ROLL_SWITCH
     }
 }
 ```
@@ -223,45 +277,59 @@ Allow the Swift compiler to infer as much type information as possible.
 ```swift
 // prefer this:
 let name = "Name"
+
 // over this:
 let name: String = "Name"
 ```
 
 ### Shortcut Type Declarations
 
-When declaring an array type, there are two ways of declaring the type: Array<T> and [T]. Apple’s Swift book prefers the latter shortcut. Indeed, it is more concise while still being readable:
+When declaring an array type, there are two ways of declaring the type: Array<T> and [T]. Apple’s Swift book prefers the latter shortcut. However, please allow the compiler to infer the type where possible.
 
 **OK**
-```
+```swift
 let stringArray: [String]
 let stringDictionary: [String: String]
 ```
 
 **NOT**
-```
+```swift
 var stringArray: Array<String>
 var stringDictionary: Dictionary<String, String>
 ```
 
-**NOTE**: _Swift does not currently have a shortcut for `Set<T>` so the extended form has to be used_
+**NOTE**: _Swift does not currently have a shortcut for `Set<T>` so the extended form has to be used_, but the compiler can infer the type of the set, so the following is preffered:
+
+**Preferred**
+```swift
+let something: Set = ["a", "b", c"] // compiler knows it is a Set<String>
+```
 
 ### Closures
 
 Collapse closures as much as possible.
-
 ```swift
-// Avoid using this:
-let result = myObject.doSomething(this: x, that: y, completion: { (this: Int, that: Int) in 
-    return this + that;
-})
+doSomething(this: Int, that: Int, completion: (Int, Int) -> Int )
+```
 
-// You can almost _always_ use the trailing closure
+**Preferred**
+```swift
+let result = myObject.doSomething(this: x, that: y) { $0 + $1 }
+let result = myObject.doSomething(this: x, that: y, completion: self.myMethod)
+```
+
+**OK**
+```swift
 let result = myObject.doSomething(this: x, that: y) { (this: Int, that: Int) in 
     return this + that;
 }
+```
 
-// But try to reduce it to this
-let result = myObject.doSomething(this: x, that: y) { $0 + $1 }
+** Not Preferred**
+```swift
+let result = myObject.doSomething(this: x, that: y, completion: { (this: Int, that: Int) in 
+    return this + that;
+})
 ```
 
 ### Default Parameters
@@ -320,12 +388,12 @@ Classes, Structs, and Enums should be named as succinctly as possible, allowing 
 
 **OK**
 ```swift
-struct Array<T> : MutableCollectionType, Sliceable
+struct Array<T>: MutableCollectionType, Sliceable
 ```
 
 **NOT**
 ```swift
-struct GenericOrderedMutableCollection<T> : MutableCollectionType, Sliceable 
+struct GenericOrderedMutableCollection<T>: MutableCollectionType, Sliceable 
 ```
 
 > *Note:* If you find yourself adding adjectives to a type's name, consider breaking those adjectives out into their own protocols.
@@ -334,16 +402,16 @@ struct GenericOrderedMutableCollection<T> : MutableCollectionType, Sliceable
 
 All types should conform to a public interface.  Swift's `stdlib` does this even with something as simple as `Bool`
 ```swift
-struct Bool : BooleanType {
+struct Bool: BooleanType {
 ```
 
-**OK**
+**Preferred**
 ```swift
-struct User : UserType {
-struct Player : UserType, Playable {
+struct User: UserType {
+struct Player: UserType, Playable {
 ```
 
-**NOT**
+**Not Preferred**
 ```swift
 struct User { 
 struct Player {
@@ -366,14 +434,14 @@ let name = "Bob"
 let settingsButton: UIButton = UIButton()
 let nameStr: String = "Bob"
 ```
-* Avoid using type information to differentiate variables.  Instead, use tuples with named values.
+* Avoid using type suffix to differentiate variables.  Instead, use tuples with named values.
 
-**OK**
+**Preferred**
 ```swift
 let transition: (view: UIView, image: UIImage)
 ```
 
-**NOT**
+**Not Preferred**
 ```swift
 let transitionView: UIView
 let transitionImage: UIImage
@@ -420,9 +488,6 @@ enum AutoEngineCylinders {
 ```swift
 enum Season {
     case Winter, Spring, Summer, Fall
-}
-enum Buffer {
-    case FirstInLastOut, FirstInFirstOut, LastInFirstOut, LastInLastOut
 }
 ```
 
@@ -529,7 +594,7 @@ func ==(lhs: MyClass, rhs: MyClass) -> Bool {
 
 Extensions are a great way to encapsulate code functionality and provide documentable scope.
 
-A class should be extended for each protocol it adheres to.  This both provides in-line documentation and avoids the need for the macro `#pragma mark - <UITableViewDelegate>`
+A class should be extended for each protocol it adheres to.  This both provides in-line documentation and avoids the need for the macro `#pragma mark - <UITableViewDelegate>` (although adding `//Mark -` is still OK)
 
 ```swift
 class MyViewController : UIViewController {
@@ -552,11 +617,16 @@ Nesting allows related information to be grouped together without worrying about
 **OK**
 ```swift
 class Monkey {
-    enum Species {
+    enum FurType {
+        case Fuzzy = "fuzzy"
+    }
+    getFur() -> String {
+        return FurType.Fuzzy.toRaw()
     }
 }
 ```
-Here, the `enum Species` won't clash with any other thing named `Species` because the _actual_ name for this is `Monkey.Species`
+Here, the `enum FurType` won't clash with any other thing named `FurType` because the _actual_ name for this is `Monkey.FurType`
+
 
 **NOT**
 ```swift
@@ -582,7 +652,7 @@ However, doing so is a code smell and usually violates the [Law of Demeter](http
 
 ```
 class Person {
-    …
+    ...
     var address: String? {
         return residence?.address?
     }
@@ -607,7 +677,7 @@ With the change in [Xcode Documentation](http://nshipster.com/swift-documentatio
 **What To Document**
 * purpose, scope, and use of all types (includes nested types)
 * convenience initializers
-* _all_ methods which `throw`
+* _all_ methods marked with `throws`
 * properties with a `var`
 
 # Mutability
@@ -880,122 +950,33 @@ if let myTicket = myRaffle.draw() {
 
 ```
 
-### Generic Results
+### Swift Errors
 
-Generic Results has been deprecated in favor of [Swift 2.0's Native Error Handling](#error-handling) features (which is _essentially_ syntactic sugar around the `Either` type)
+In Swift 2.0, Apple has added a [definitive "try/catch" error handling](https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/ErrorHandling.html) that transforms the CocoaTouch's API of the dreaded `error:(NSError **)error` pattern into something delightful to use.  The new "try/catch" logic is pretty awesome ([and best described elsewhere](https://www.bignerdranch.com/blog/error-handling-in-swift-2/)) when combined with `guard` and `defer`.
 
-> The generic result-type is a good way to force the caller of your function to handle the failure case (or at least recognize it's existence).  In order to handle the return, the caller must unwrap the enum to get at the underlying type.
+Apple's documentation provides a thorough guide on using errors.
 
-> ```swift
-> enum Result<S, E: ErrorType> {
->   case Success(S)
->   case Failure(E)
-> }
-> ```
-
-> The result-type is VERY similar to the Optional Type:
-
-> ```swift
-> enum Optional<S> {
->     case Some(S)
->     case None
-> }
-> ```
-
-> The only difference here is that instead of returning a `nil` value, the result-type gives additional information 
-
-### Error Handling
-
-In Swift 2.0, Apple has added a [definitive "try/catch" error handling](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/ErrorHandling.html) that transforms the CocoaTouch's API of the dreaded `error:(NSError **)error` pattern into something delightful to use.  The new "try/catch" logic is pretty awesome ([and best described elsewhere](https://www.bignerdranch.com/blog/error-handling-in-swift-2/)) when combined with `guard` and `defer`.
-
-##### When to Use:
-
-* When you want to force the caller to handle the error case(s).
-* When working with `NSError**`
-* When working with CocoaTouch APIs
-
-##### Example:
+**Preferred**
 ```swift
-typealias Ticket Int
-
-class Raffle {
-    private var bucket: [Ticket]
-    init(values: [Ticket]) {
-        bucket = values
-    }
-
-    enum RaffleError: ErrorType {
-        case BucketEmpty
-    }
-
-    /// pop and return ticket, or throw
-    func draw() throws -> Ticket {
-        guard bucket.count > 0 else {
-            throw RaffleError.BucketEmpty
-        }
-        let temp = bucket.last
-        bucket.remove(temp)
-        return temp
-    }
-}
-
-// Using Try/Catch
-let myRaffle = Raffle([1..5])
 do {
-    let myTicket = try myRaffle.draw()
-    print(myTicket)
-}
-catch Raffle.RaffleError.BucketEmpty {
-    // Deal with Bucket Emptiness.
-}
-catch ErrorType {
-    // Unexpected error!
-}
+    let myThing: String = try methodWhichThrows()
+} catch {
 
-```
-
-It is interesting to note though, that you _can_ chain throws in a way.  Given the prior Monkey example, we can do the following:
-
-```swift
-
-struct Monkey {
-    let name: String
-}
-
-struct Tricycle {
-    let brandName: String
-}
-
-class MonkeyDB {
-    func getMonkey(name: String) throws -> Monkey
-    func getTricycle(monkey: Monkey) throws -> Tricycle
 }
 ```
 
-I could "chain" the following MonkeyDB calls:
+While not preferred, it is OK to discard the error and treat the call as if it was an Optional
+
+**OK**
 ```swift
-
-let database = MonkeyDB()
-
-let favMonkeyName = "Mr Bubbles"
-do {
-  let monkey = try database.getMonkey(favMonkeyName)
-  let tricycle = try database.getTricycle(monkey)
-  let brandName = tricycle.brandName
-}
-catch {
-  // handle errors here
-}
+let myThing: Optional<String> = try? methodWhichThrows()
 ```
 
-or (if you're serious about one-liners)
+Along with force-unwrapping optionals, **DO NOT** force-unwrap errors.
+
+**NOT OK***
 ```swift
-do {
-  let brandName = try database.getTricycle( try database.getMonkey(favMonkeyName) ).brandName
-}
-catch {  
-  // handle errors here
-}
+let myThing = try! methodWhichThrows()
 ```
 
 And I'd be remiss if I didn't add something here about [`rethrows`](http://robnapier.net/re-throws).  :smile: 
@@ -1011,8 +992,10 @@ The `guard` keyword can be used with all 3 different failure types above.  Examp
 ```swift
 // `guard` with optional return value
 func createPerson(age: String, name: String) -> Person? {
-    guard let age = age, let name = name 
-        where name.characters.count > 0 && age.characters.count > 0 else {
+    guard 
+        let age = age, let name = name 
+        where name.characters.count > 0 && age.characters.count > 0 
+    else {
         return nil
     }   
     guard let ageFormatted = Int(age) else {
@@ -1026,22 +1009,12 @@ enum InputError: ErrorType {
     case AgeIncorrect
 }
 
-// guard with `Result<S,E>` return type
-func createPerson(age: String, name: String) throws -> Person {
-    guard let age = age, let name = name 
-        where name.characters.count > 0 && age.characters.count > 0 else {
-       return .Failure(InputMissing)
-    }   
-    guard let ageFormatted = Int(age) else {
-        return .Failure(AgeIncorrect)
-    }
-    return .Success(Person(name: name, age: ageFormatted))
-}
-
 // guard with return value, but throws an error
 func createPerson(age: String, name: String) throws -> Person {
-    guard let age = age, let name = name 
-        where name.characters.count > 0 && age.characters.count > 0 else {
+    guard 
+        let age = age, let name = name 
+        where name.characters.count > 0 && age.characters.count > 0 
+    else {
         throw InputError.InputMissing
     }   
     guard let ageFormatted = Int(age) else {
