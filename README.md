@@ -14,11 +14,6 @@ This document is intended as a style guide for Swift written from the perspectiv
 
 # Table of Contents
 
-* [Swift Design Patterns](#swift-design-patterns)
- * [Protocol-Oriented Programming](#Protocol-Oriented-Programming)
- * [Value-First Programming](#Value-First-Programming)
- * [Functional Programming](#Functional-Programming)
- * [Objective-C Interoperability](#objective-c-interoperability)
 * [Naming and Code Clarity](#naming-and-code-clarity)
  * [Spacing](#spacing)
  * [Conditionals](#conditionals)
@@ -53,41 +48,6 @@ This document is intended as a style guide for Swift written from the perspectiv
 * [Code Smells](#code-smells)
 
 ***
-
-# Swift Design Patterns
-
-## Protocol-Oriented Programming
-
-Swift is a "Protocol-Oriented Programming Language" [WWDC2015 video on it](https://developer.apple.com/videos/wwdc/2015/?id=408).  As such, whenever a dev sit down to write code they should begin by writing a `protocol`.  Since all types (`struct`, `class`, `enum`) can inherit protocols, it allows us to not lock our selves into any given implementation.
-
-**Benefits of POP**
-* Little to no need for Mocks or Stubs in Unit Testing
-* Not locked into a given implementation
-* Further de-couples code
-
-**Prefered**
-* **Write a protocol first**: Describe the type before implementing it
-* **Behavior Injection**: Define a function `typealias` for customizing a type's behavior
-* **Dependency Injection**: Subscribe _only_ to another protocol.
-* **Nest Types**: If a type requires data in a given format or an enum, include it in the protocol
-
-**Not Preffered**
-* **Subclass**: Instead, opt for multiple inheritance through Protocols and default implementations
-* **Adjectives in Type Names**: If you added an adjective to a type name, consider breaking that adjective out into it's own protocol
-* **Nest Types in a Function**: Don't.  Please...  Don't.
-* **Multiple Responsibilities**: If you use the word "and" when describing your type, break out the additional functionality into different types. ([SOLID design](https://speakerdeck.com/dannyhertz/practically-solid-1))
-
-## Value-First Programming
-
-TODO
-
-## Functional Programming
-
-TODO
-
-## Objective-C Interoperability
-
-TODO
 
 # Naming and Code Clarity
 
