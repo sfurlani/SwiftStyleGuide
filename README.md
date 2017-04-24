@@ -122,15 +122,13 @@ if (something) {
 ```swift
 if 
     mySomething ||
-    (otherSomething && thisThing)
-{
+    (otherSomething && thisThing) {
     
 } 
 
 guard
     let x = myString.toInt(),
-    x > 0 
-else {
+    x > 0 else {
     
 }
 ```
@@ -145,7 +143,8 @@ if mySomething ||
 
 guard 
     let x = myString.toInt(),
-    x > 0 else {
+    x > 0 
+    else {
     
 }
 ```
