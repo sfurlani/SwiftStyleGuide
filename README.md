@@ -1045,3 +1045,20 @@ if let myInt = myString?.toInt() {
 }
 ```
 
+## `mutating func`
+
+As mentioned earlier under the [Mutability](#mutating) section, using this keyword _hides_ functionality. What the compiler generates is _not_ what you wrote in the code, and there are better alternatives than trying to force a `struct` to behave like a `class`.
+
+## `inout`
+
+Similar to `mutating func`, the `inout` keyword hides the actual implementation behind an obscure keyword. This should be reserved for C or C++ compatibility _only_ - and **never** in any developer-generated code.
+
+Here is a [link to the Apple Documentation](https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/doc/uid/TP40014097-CH34-ID545) which says the following:
+
+> In-out parameters are passed as follows:
+> 1. When the function is called, the value of the argument is copied.
+> 2. In the body of the function, the copy is modified.
+> 3. When the function returns, the copy’s value is assigned to the original argument.
+> This behavior is known as *copy-in copy-out* or *call by value result*. 
+
+
