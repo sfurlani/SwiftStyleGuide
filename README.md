@@ -1,7 +1,5 @@
 # Swift Guides
 
-## Beginner Guide
-* 
+## [Beginner Guide](BeginnerGuide.md)
 
-## Style Guide
-* [Swift Style Guide 3.0](StyleGuide.md)
+## [Swift Style Guide 3.0](StyleGuide.md)
