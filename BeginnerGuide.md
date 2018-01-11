@@ -24,7 +24,7 @@ let sum = 5 + convertedNumber! // <--- here! BAD
 
 This is **BAD**. Never force-unwrap optionals.
 
-### `if let` Pattern
+#### `if let` Pattern
 By using Optional Binding, we avoid the danger of crashing our application. 
 ```swift
 let userInput = // some string value
@@ -49,7 +49,7 @@ if convertedNumber != nil {
 ```
 While _technically_ ok, this code still uses force-unwrapping and everyone should avoid it.
 
-### `guard let` Pattern
+#### `guard let` Pattern
 Sometimes the `if let` pattern is too restricting - we need `convertedNumber` to exist outside of the `if` statement.  Here, we'll use a guard statement with Optional Binding. This helps us avoid ["pyramid programming"](https://thatthinginswift.com/guard-statement-swift/) (which is ugly, but not necessarily bad, programming).
 ```swift
 let userInput = // some string value
