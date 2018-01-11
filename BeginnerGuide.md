@@ -10,25 +10,10 @@ This beginner guide is to help developers new to iOS and/or Swift not fall into 
 * [Rule #4: Be Athiest](#rule-4-be-athiest)
 
 # Rule #0: Be Polite
-Never force your code `!` - always ask `?` instead.
+Never force your code `!` - always ask `?` instead. Using `!` in your code is lazy, rude, and unacceptable.
 
 ## Swift - Optionals
-### What is an Optional?
-[Optionals in Swift](https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/TheBasics.html#//apple_ref/doc/uid/TP40014097-CH5-ID330) are a data type that helps answer the question "Does this data exist or not?" Their main purpose is to remove the need for special return values or flags. Consider the following:
-
-```swift
-let userInput = "123"
-let convertedNumber = Int(userInput)
-```
-In this case, `convertedNumber` is of type `Int?` - because we don't know whether or not `userInput` contained a valid number.  The example could have just as easily been:
-```swift
-let userInput = "jimmy"
-let convertedNumber = Int(userInput)
-```
-In this case, `"jimmy"` doesn't convert to an integer. Swift provides the optional type so that methods can return `nil` (a value meaning "nothing") instead of crashing the application.
-
-### Why should I be polite?
-In our example, when we want to use the `convertedNumber`'s value we need to do what's called "unwrapping." In swift, you can unwrap politely by using `?` or you can be rude and use force-unwrapping with `!`.
+[Optionals in Swift](https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/TheBasics.html#//apple_ref/doc/uid/TP40014097-CH5-ID330) are a data type that helps answer the question "Does this data exist or not?" Their main purpose is to remove the need for special return values or flags. In swift, you can use an optional's value by unwrap politely by using `?` or you can be rude and use force-unwrapping with `!`.
 
 Here's the rude example:
 ```swift
@@ -37,15 +22,10 @@ let convertedNumber = Int(userInput)
 let sum = 5 + convertedNumber! // <--- here! BAD
 ```
 
-When you run this code, it will probably work. You, the developer, will probably always put some value into `userInput` that nicely converts to an integer. **HOWEVER** if the user enters `"jimmy"` for `userInput` the rude example above will **CRASH YOUR APP**.
+This is **BAD**. Never force-unwrap optionals.
 
-This is **BAD**.
-
-Never, ever, force-unwrap variables in your code.
-
-Using `!` in your code is lazy, rude, and unacceptable.
-
-However, being polite in your code does require some extra work - just like in real life. You can avoid being rude by using `guard let` or `if let` statements.
+### Optional Binding
+Instead of forcing, use Optional Binding instead.
 
 #### `if let` Pattern
 By using Optional Binding, we avoid the danger of crashing our application. 
