@@ -12,7 +12,7 @@ This beginner guide is to help developers new to iOS and/or Swift not fall into 
 # Rule #0: Be Polite
 Never force your code `!` - always ask `?` instead. Using `!` in your code is lazy, rude, and unacceptable.
 
-## Swift - Optionals
+## Optionals
 [Optionals in Swift](https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/TheBasics.html#//apple_ref/doc/uid/TP40014097-CH5-ID330) are a data type that helps answer the question "Does this data exist or not?" Their main purpose is to remove the need for special return values or flags. In swift, you can use an optional's value by unwrap politely by using `?` or you can be rude and use force-unwrapping with `!`.
 
 Here's the rude example:
@@ -24,10 +24,7 @@ let sum = 5 + convertedNumber! // <--- here! BAD
 
 This is **BAD**. Never force-unwrap optionals.
 
-### Optional Binding
-Instead of forcing, use Optional Binding instead.
-
-#### `if let` Pattern
+### `if let` Pattern
 By using Optional Binding, we avoid the danger of crashing our application. 
 ```swift
 let userInput = // some string value
@@ -52,7 +49,7 @@ if convertedNumber != nil {
 ```
 While _technically_ ok, this code still uses force-unwrapping and everyone should avoid it.
 
-#### `guard let` Pattern
+### `guard let` Pattern
 Sometimes the `if let` pattern is too restricting - we need `convertedNumber` to exist outside of the `if` statement.  Here, we'll use a guard statement with Optional Binding. This helps us avoid ["pyramid programming"](https://thatthinginswift.com/guard-statement-swift/) (which is ugly, but not necessarily bad, programming).
 ```swift
 let userInput = // some string value
@@ -67,7 +64,7 @@ let sum = 5 + convertedNumber // <--- no ! - GOOD
 
 There are many other patterns you can use to do conditional unwrapping but remember! Never Force! Don't use `!`
 
-## Swift - Downcasting
+## Downcasting
 [Swift, like other languages, allows converting a value's type into another type.](https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/TypeCasting.html#//apple_ref/doc/uid/TP40014097-CH22-ID341) Swift offers two forms of downcasting - conditional `as?` and forced `as!`. Just like with optionals, you need to be polite and avoid forcing.
 
 Here is the rude example:
@@ -88,7 +85,7 @@ if let userNumber = userInput as? Int {
 }
 ```
 
-## Swift - Error Handling
+## Error Handling
 [Swift has Error Handling](https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/ErrorHandling.html) and in addition to re-throwing or handling via a `do/catch` block, you can convert Errors into optionals using `try?` and `try!`.
 
 However, never use `try!`. This is rude and will crash your app.
@@ -106,15 +103,14 @@ if let x = try? someThrowingFunction() {
 }
 ```
 
-## iOS - Exceptions
-### Implicitly Unwrapped `!`
+## Exception: Implicitly Unwrapped
 So... there's always exceptions to rules, and in iOS there is a BIG one.
 
 I mentioned before that using `!` us rude, lazy, and unacceptable programming.
 
 Well, Apple decided to be *LAZY* and not update UIKit for Swift.
 
-Hence, you will see this everywhere in your code:
+Hence, you will see this Implicitly Unwrapped variables everywhere in your code:
 
 ```swift
 class MyViewController: UIViewController {
@@ -122,11 +118,11 @@ class MyViewController: UIViewController {
 ...
 ```
 
-When you give a type the `!` you are marking it as _implicitly unwrapped_.  This means that, except for a short period of time between when the `UIViewController` has been `init` and `viewDidLoad` - you can assume that IBOutlets are not-nil.
+Here, except for a short period of time between when the `UIViewController` has been `init` and `viewDidLoad`, UIKit says you can assume that IBOutlets are not-nil.
 
-But this is not a pattern you should repeat. You are still _forcing_ the code to work - and it is still rude. 
+But this is not a pattern you should repeat. You are still _forcing_ the code to work - and it is still rude.  When you give a type the `!` you are opening up your code to errors and crashing at run time.
 
-Be polite. Don't use `!` outside of UIKit code.
+Do a little bit of extra work and safely unwrap that value before using it.
 
 
 # Rule #1: Be Pure 
