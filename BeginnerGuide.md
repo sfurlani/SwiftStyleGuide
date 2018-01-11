@@ -10,7 +10,9 @@ This beginner guide is to help developers new to iOS and/or Swift not fall into 
 * [Rule #4: Be Athiest](#rule-4-be-athiest)
 
 # Rule #0: Be Polite
-Never force your code `!` - always ask `?` instead. Using `!` in your code is lazy, rude, and unacceptable.
+Never force your code with `!` - always ask `?` instead. Using `!` in your code is lazy, rude, and unacceptable.
+
+Being polite will take extra work. You might need to write a few more lines of code or do some safety-checking. But it is always preferrable to be safe and polite, than risking your app crashing in the hands of your users.
 
 ## Optionals
 [Optionals in Swift](https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/TheBasics.html#//apple_ref/doc/uid/TP40014097-CH5-ID330) are a data type that helps answer the question "Does this data exist or not?" Their main purpose is to remove the need for special return values or flags. In swift, you can use an optional's value by unwrap politely by using `?` or you can be rude and use force-unwrapping with `!`.
