@@ -3,6 +3,11 @@
 ## Why
 This beginner guide is to help developers new to iOS and/or Swift not fall into some really common pitfalls. This document is phrased as a list of "rules" to be A) cheeky and B) help with remembering.
 
+* [Rule #0: Be Polite](#rule-0-be-polite)
+* [Rule #1: Be Pure](#rule-1-be-pure)
+* [Rule #2: Be Marxist](#rule-2-be-marxist)
+* [Rule #3: Be Athiest](#rule-3-be-atheist)
+
 # Rule #0: Be Polite
 Never force your code `!` - always ask `?` instead.
 
