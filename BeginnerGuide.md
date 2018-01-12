@@ -3,13 +3,13 @@
 ## Why
 This beginner guide is to help developers new to iOS and/or Swift not fall into some really common pitfalls. This document is phrased as a list of "rules" to be A) cheeky and B) help with remembering.
 
-* [Rule #0: Be Polite](#rule-0-be-polite)
+* [Rule #0: Don't be Rude](#rule-0-dont-be-rude)
 * [Rule #1: Don't Be Cancerous](#rule-1-dont-be-cancerous)
 * [Rule #2: Be Marxist](#rule-2-be-marxist)
 * [Rule #3: Be Functional](#rule-3-be-functional)
 * [Rule #4: Be Athiest](#rule-4-be-athiest)
 
-# Rule #0: Be Polite
+# Rule #0: Don't be Rude
 Never force your code with `!` - always ask `?` instead. Using `!` in your code is lazy, rude, and unacceptable.
 
 Being polite will take extra work. You might need to write a few more lines of code or do some safety-checking. But it is always preferrable to be safe and polite, than risking your app crashing in the hands of your users.
@@ -41,13 +41,7 @@ if let convertedNumber = Int(userInput) {
 ```
 
 ## Exception: Implicitly Unwrapped Properties
-So... there's always exceptions to rules, and in iOS there is a BIG one.
-
-I mentioned before that using `!` is rude, lazy, and unacceptable programming.
-
-Well, Apple decided to be *LAZY* and not update UIKit for Swift.
-
-Hence, you will see this Implicitly Unwrapped variables everywhere in your code:
+Apple did not update UIKit for Swift, and so you will see this Implicitly Unwrapped variables everywhere in your code when it comes to UIKit:
 
 ```swift
 class MyViewController: UIViewController {
@@ -55,7 +49,7 @@ class MyViewController: UIViewController {
 ...
 ```
 
-But this is not a pattern you should repeat. You are still _forcing_ the code to work - and it is still rude.  When you give a type the `!` you are opening up your code to errors and crashing at run time.
+But this is _not a pattern_ you should repeat. You are still _forcing_ the code to work - and it is still rude.  When you give a type the `!` you are opening up your code to errors and crashing at run time.
 
 Do a little bit of extra work and safely unwrap that value before using it.
 
