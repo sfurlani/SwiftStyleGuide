@@ -10,6 +10,14 @@ This document is intended as a style guide for Swift written from the perspectiv
   * [KVO Alternatives](http://natashatherobot.com/ios-a-beautiful-way-of-styling-iboutlets-in-swift/)
   * [Railroad Programming](http://natashatherobot.com/swift-guard-better-than-if)
 
+
+## References
+
+* [The Swift API Design Guidelines](https://swift.org/documentation/api-design-guidelines/)
+* [The Swift Programming Language](https://developer.apple.com/library/prerelease/ios/documentation/swift/conceptual/swift_programming_language/index.html)
+* [Using Swift with Cocoa and Objective-C](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/index.html)
+* [Swift Standard Library Reference](https://developer.apple.com/library/prerelease/ios/documentation/General/Reference/SwiftStandardLibraryReference/index.html)
+
 ***
 
 # Table of Contents
