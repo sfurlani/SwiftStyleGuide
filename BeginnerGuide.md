@@ -61,6 +61,7 @@ The following areas in swift allow for mutability that should be avoided:
 * [Avoid using `var`](#avoid-using-var)
 * [Avoid using Objects](#avoid-using-objects)
 * [Never use `mutating`](#never-use-mutating)
+* [Never use `inout`](#never-use-inout)
 
 ## Avoid using `var`
 When you define a variable in swift, you can do so in two ways:
@@ -131,7 +132,20 @@ Prefer `struct` and `enum` over `class`. If you're coming from Javascript, Java,
 ## Never use `mutating`
 You can read the [swift style guideline](StyleGuide.md#mutating) on why `mutating` is bad.
 
-Just *never* using `mutating`.  Don't.  There's NO REASON for you to use it.  It's there _only_ as an assist to bridge Swift and Objective-C.
+Just *never* using `mutating`.  Don't.  There's NO REASON for you to use it. It is HORRIBLE and NO.
+
+## Never use `inout`
+You can read the [swift style guideline](StyleGuide.md#inout) on why `inout` is bad.
+
+In swift, `inout` is only provided for compatibility with C and C++. It should never be used on it's own. Traditionally it was used in functions like this:
+```swift
+let success: Bool = mathFunction(a: Int, b: Int, inout result: Int)
+```
+
+It is preferred to use Optionals or Error Handling:
+```swift
+let result: Int? = mathFunction(a: Int, b: Int)
+```
 
 # Rule #2: Be Functional
 Avoid side-effects in your code by using functional patterns
