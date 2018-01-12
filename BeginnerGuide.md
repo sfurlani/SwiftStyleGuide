@@ -59,9 +59,9 @@ Do a little bit of extra work and safely unwrap that value before using it.
 Mutability is a term which describes how your code can be changed at run-time. In almost all cases, mutability should be considered a _cancer_ in your code and avoided where possible.  However, unlike Rule #0, there are some _good_ exceptions to this rule.
 
 The following areas in swift allow for mutability that should be avoided:
-* Avoid using `var`
-* Avoid using Objects
-* Never use `mutating`
+* [Avoid using `var`](#avoid-using-var)
+* [Avoid using Objects](#avoid-using-objects)
+* [Never use `mutating`](#never-use-mutating)
 
 ## Avoid using `var`
 When you define a variable in swift, you can do so in two ways:
