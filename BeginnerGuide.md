@@ -4,7 +4,7 @@
 This beginner guide is to help developers new to iOS and/or Swift not fall into some really common pitfalls. This document is phrased as a list of "rules" to be A) cheeky and B) help with remembering.
 
 * [Rule #0: Be Polite](#rule-0-be-polite)
-* [Rule #1: Be Pure](#rule-1-be-pure)
+* [Rule #1: Don't Be Cancerous](#rule-1-dont-be-cancerous)
 * [Rule #2: Be Marxist](#rule-2-be-marxist)
 * [Rule #3: Be Functional](#rule-3-be-functional)
 * [Rule #4: Be Athiest](#rule-4-be-athiest)
@@ -127,7 +127,7 @@ But this is not a pattern you should repeat. You are still _forcing_ the code to
 Do a little bit of extra work and safely unwrap that value before using it.
 
 
-# Rule #1: Be Pure 
+# Rule #1: Don't Be Cancerous 
 Avoid using `var`  
 Never use the `mutating` keyword - why do you even know about this?
 
