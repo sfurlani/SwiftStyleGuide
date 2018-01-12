@@ -5,6 +5,10 @@ This beginner guide is to help developers new to iOS and/or Swift not fall into 
 
 * [Rule #0: Don't be Rude](#rule-0-dont-be-rude)
 * [Rule #1: Don't Be Cancerous](#rule-1-dont-be-cancerous)
+  * [Avoid using `var`](#avoid-using-var)
+  * [Avoid using Objects](#avoid-using-objects)
+  * [Never use `mutating`](#never-use-mutating)
+  * [Never use `inout`](#never-use-inout)
 * [Rule #2: Be Functional](#rule-2-be-functional)
 * [Rule #3: Be Athiest](#rule-3-be-athiest)
 
