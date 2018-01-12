@@ -140,11 +140,13 @@ You can read the [swift style guideline](StyleGuide.md#inout) on why `inout` is 
 In swift, `inout` is only provided for compatibility with C and C++. It should never be used on it's own. Traditionally it was used in functions like this:
 ```swift
 let success: Bool = mathFunction(a: Int, b: Int, inout result: Int)
+otherFunction(a: Int, b: Int, inout x: Int, inout y: Int, inout z: Int)
 ```
 
-It is preferred to use Optionals or Error Handling:
+It is preferred to use Optionals, Error Handling, or Tuples:
 ```swift
 let result: Int? = mathFunction(a: Int, b: Int)
+let (x, y, z) = otherFunction(a: Int, b: Int)
 ```
 
 # Rule #2: Be Functional
