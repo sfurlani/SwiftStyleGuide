@@ -24,17 +24,16 @@ In all 3 cases, it is preferred to use [Optional Binding](https://developer.appl
 
 Here's a _rude_ example to avoid:
 ```swift
-let userInput = // some string value
+let userInput = // some string value like "123" or "bob"
 let convertedNumber = Int(userInput)
-let sum = 5 + convertedNumber! // <--- here! BAD
+let sum = 5 + convertedNumber! // <--- BAD
 ```
 
 Here is a preferred _polite_ example:
 ```swift
-let userInput = // some string value
+let userInput = // some string value like "123" or "bob"
 if let convertedNumber = Int(userInput) {
-  // here, convertedNumber exists and is an integer we can use
-  let sum = 5 + convertedNumber // <--- no ! - GOOD
+  let sum = 5 + convertedNumber // <--- GOOD
 } else {
   // handle the case where convertedNumber is nil
 }
@@ -54,8 +53,31 @@ But this is _not a pattern_ you should repeat. You are still _forcing_ the code 
 Do a little bit of extra work and safely unwrap that value before using it.
 
 # Rule #1: Don't Be Cancerous 
-Avoid using `var`  
-Never use the `mutating` keyword - why do you even know about this?
+> Mutability in swift is a massive topic which cannot be covered quickly here, and I will likely create an entire guide on mutability later.
+> -- editor
+
+Mutability is a term which describes how your code can be changed at run-time. In almost all cases, mutability should be considered a _cancer_ in your code and avoided where possible.  However, unlike Rule #0, there are some _good_ exceptions to this rule.
+
+The following areas in swift allow for mutability that should be avoided:
+* Avoid using `var`
+* Avoid using Objects
+* Never use `mutating`
+
+## Avoid using `var`
+When you define a variable in swift, you can do so in two ways:
+* `let` - a fixed reference to a value
+* `var` - a mutable reference to a value
+
+Please note that `let` does not declare _constants_. You can assign a mutable value to a `let` reference (like a `UILabel`).
+
+## Avoid using Objects
+Prefer `struct` and `enum` over `class`
+* [Andy Matsuchak - Controlling Complexity in Swift](https://academy.realm.io/posts/andy-matuschak-controlling-complexity/)
+
+## Never use `mutating`
+You can read the [swift style guideline](StyleGuide.md#mutating) on why `mutating` is bad.
+
+Just *never* using `mutating`.  Don't.  There's NO REASON for you to use it.  It's there _only_ as an assist to bridge Swift and Objective-C.
 
 # Rule #2: Be Marxist
 Avoid race conditions and data errors by using `struct` and `enum` instead of `class`
