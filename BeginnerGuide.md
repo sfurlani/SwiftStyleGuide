@@ -68,10 +68,18 @@ When you define a variable in swift, you can do so in two ways:
 * `let` - a fixed reference to a value
 * `var` - a mutable reference to a value
 
-Please note that `let` does not declare _constants_. You can assign a mutable value to a `let` reference (like a `UILabel`).
+Please note that `let` does not declare _constants_. You can assign a mutable value to a `let` reference (like a `UILabel`). When you use `let`, you are creating a reference which can be assigned _only once_. When you use `var` you're creating a reference which can be assigned over and over.
+
+In general, your code should prefer using `let` instead of `var`.
+
+### Exception: Computed Properties
+Using `var` for computed properties is perfectly acceptable and actually strongly encouraged.
+
+### Exception: Building Values
+The most common use for a `var` is that your code needs to take many inputs (like an array or dictionary) 
 
 ## Avoid using Objects
-Prefer `struct` and `enum` over `class`
+Prefer `struct` and `enum` over `class`. If you're coming from Javascript, Java, Objective-C, C++, or C# - your default reaction is to create an Object. In Swift, however, 
 * [Andy Matsuchak - Controlling Complexity in Swift](https://academy.realm.io/posts/andy-matuschak-controlling-complexity/)
 
 ## Never use `mutating`
