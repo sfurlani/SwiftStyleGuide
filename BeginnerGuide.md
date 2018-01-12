@@ -5,9 +5,8 @@ This beginner guide is to help developers new to iOS and/or Swift not fall into 
 
 * [Rule #0: Don't be Rude](#rule-0-dont-be-rude)
 * [Rule #1: Don't Be Cancerous](#rule-1-dont-be-cancerous)
-* [Rule #2: Be Marxist](#rule-2-be-marxist)
-* [Rule #3: Be Functional](#rule-3-be-functional)
-* [Rule #4: Be Athiest](#rule-4-be-athiest)
+* [Rule #2: Be Functional](#rule-2-be-functional)
+* [Rule #3: Be Athiest](#rule-3-be-athiest)
 
 # Rule #0: Don't be Rude
 Never force your code with `!` - always ask `?` instead. Using `!` in your code is lazy, rude, and unacceptable.
@@ -73,10 +72,57 @@ Please note that `let` does not declare _constants_. You can assign a mutable va
 In general, your code should prefer using `let` instead of `var`.
 
 ### Exception: Computed Properties
-Using `var` for computed properties is perfectly acceptable and actually strongly encouraged.
+Using `var` for computed properties is perfectly acceptable and actually strongly encouraged. Example:
+```swift
+struct DataModel {
+  let value: Int
+  var computedProperty: Int {
+    return self.value + 5;
+  }
+}
+```
 
-### Exception: Building Values
-The most common use for a `var` is that your code needs to take many inputs (like an array or dictionary) 
+### Exception: Isolate Constructors
+The most common use for a `var` is that your code needs to take many inputs (like an array or dictionary). I recommend moving constructors into their own function.
+
+Avoid mixing construction code with other app logic:
+```swift
+override func viewDidLoad() {
+  ...
+  var tiles: [UIView] = []
+  if some_case {
+    tiles.append(a_new_tile)
+  }
+  if some_other_case {
+    tiles.append(another_tile)
+  } else {
+    tiles.append(default_tile)
+  }  
+  ...
+}
+```
+
+Prefer isolate Construction Code:
+```swift
+override func viewDidLoad() {
+  ...
+  let tiles = buildTiles()
+  ...
+}
+
+func buildTiles() -> [UIView] {
+  var tiles: [UIView] = []
+  if some_case {
+    tiles.append(a_new_tile)
+  }
+  if some_other_case {
+    tiles.append(another_tile)
+  } else {
+    tiles.append(default_tile)
+  }
+  return tiles
+}
+```
 
 ## Avoid using Objects
 Prefer `struct` and `enum` over `class`. If you're coming from Javascript, Java, Objective-C, C++, or C# - your default reaction is to create an Object. In Swift, however, 
@@ -87,11 +133,8 @@ You can read the [swift style guideline](StyleGuide.md#mutating) on why `mutatin
 
 Just *never* using `mutating`.  Don't.  There's NO REASON for you to use it.  It's there _only_ as an assist to bridge Swift and Objective-C.
 
-# Rule #2: Be Marxist
-Avoid race conditions and data errors by using `struct` and `enum` instead of `class`
-
-# Rule #3: Be Functional
+# Rule #2: Be Functional
 Avoid side-effects in your code by using functional patterns
 
-# Rule #4: Be Athiest
+# Rule #3: Be Athiest
 Break God-Objects down into task-specific handlers
